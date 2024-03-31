@@ -1,3 +1,4 @@
+import 'package:example_everything/provider/example_provider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,21 +38,31 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SafeArea(
-        top: true,
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  return const InheritedDemoApp();
-                }));
-              },
-              child: const Text('Inherited Widget'),
-            )
-          ],
-        ),
-      ),
+      home: Builder(builder: (context) {
+        return SafeArea(
+          top: true,
+          child: ListView(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return const InheritedDemoApp();
+                  }));
+                },
+                child: const Text('Inherited Widget'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return const ProviderDemoApp();
+                  }));
+                },
+                child: const Text('Provider'),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }
