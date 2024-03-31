@@ -5,7 +5,7 @@ import 'inherited_widget/example_inherited_widget.dart';
 
 void main() {
   runApp(
-    MyApp(),
+    const MyApp(),
   );
 }
 
@@ -37,11 +37,20 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Column(
-        children: [
-          IH_Example1(),
-          IH_Example2(),
-        ],
+      home: SafeArea(
+        top: true,
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                  return const InheritedDemoApp();
+                }));
+              },
+              child: const Text('Inherited Widget'),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -6,51 +6,58 @@ class InheritedDemoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('InheritedDemoApp'),
-      ),
-      body: const Column(
-        children: [
-          IH_Example1(),
-          IH_Example2(),
-        ],
+    print('InheritedDemoApp build');
+    return IH_ExampleInheritedDataWidget(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('InheritedDemoApp'),
+        ),
+        body: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _IH_Example1(),
+            _IH_Example2(),
+          ],
+        ),
       ),
     );
   }
 }
 
-class IH_Example1 extends StatefulWidget {
-  const IH_Example1({super.key});
+class _IH_Example1 extends StatefulWidget {
+  const _IH_Example1({super.key});
 
   @override
-  State<IH_Example1> createState() => _IH_Example1State();
+  State<_IH_Example1> createState() => _IH_Example1State();
 }
 
-class _IH_Example1State extends State<IH_Example1> {
+class _IH_Example1State extends State<_IH_Example1> {
   @override
   Widget build(BuildContext context) {
-    print(
-        'Example1 - build - value1: ${IH_ExampleInheritedWidget.ofData(context, IH_ExampleAspect.value1)?.value1}');
+    final value1 =
+        IH_ExampleInheritedWidget.ofData(context, IH_ExampleAspect.value1)
+            ?.value1;
+    print('Example1 - build - value1: $value1');
     return Container(
       child: ElevatedButton(
         onPressed: () {
           IH_ExampleInheritedWidget.of(context)?.increment1();
         },
-        child: const Text('Example1 btn'),
+        child: Text('Example1 btn - $value1'),
       ),
     );
   }
 }
 
-class IH_Example2 extends StatefulWidget {
-  const IH_Example2({super.key});
+class _IH_Example2 extends StatefulWidget {
+  const _IH_Example2({super.key});
 
   @override
-  State<IH_Example2> createState() => _IH_Example2State();
+  State<_IH_Example2> createState() => _IH_Example2State();
 }
 
-class _IH_Example2State extends State<IH_Example2> {
+class _IH_Example2State extends State<_IH_Example2> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -59,14 +66,16 @@ class _IH_Example2State extends State<IH_Example2> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        'Example2 - build - value2: ${IH_ExampleInheritedWidget.ofData(context, IH_ExampleAspect.value2)?.value2}');
+    final value2 =
+        IH_ExampleInheritedWidget.ofData(context, IH_ExampleAspect.value2)
+            ?.value2;
+    print('Example2 - build - value2: $value2');
     return Container(
       child: ElevatedButton(
         onPressed: () {
           IH_ExampleInheritedWidget.of(context)?.increment2();
         },
-        child: const Text('Example2 btn'),
+        child: Text('Example2 btn - $value2'),
       ),
     );
   }
@@ -130,9 +139,6 @@ class IH_ExampleInheritedWidget extends InheritedModel<IH_ExampleAspect> {
       context,
       aspect: aspect,
     );
-    final IH_ExampleInheritedWidget? result =
-        context.dependOnInheritedWidgetOfExactType<IH_ExampleInheritedWidget>();
-    return result!;
   }
 
   @override
